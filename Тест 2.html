@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Айраг ЕБС</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#0f172a;color:#e2e8f0}
+
+/* Navbar */
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 60px;background:rgba(15,23,42,0.9);position:fixed;width:100%;top:0;z-index:1000;backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{width:40px;height:40px;border-radius:50%}
+.logo span{font-size:22px;font-weight:700;color:#38bdf8}
+
+.nav-links{display:flex;gap:25px;list-style:none}
+.nav-links a{text-decoration:none;color:#e2e8f0;transition:0.3s}
+.nav-links a:hover{color:#38bdf8}
+
+/* Dropdown */
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:120%;left:0;background:#1e293b;border-radius:10px;padding:10px;min-width:180px}
+.dropdown-menu li{list-style:none}
+.dropdown-menu li a{display:block;padding:8px;color:white}
+.dropdown:hover .dropdown-menu{display:block}
+
+.btn-cta{padding:10px 20px;background:#38bdf8;color:#0f172a;border-radius:8px;text-decoration:none;font-weight:600; border:none; cursor:pointer;}
+
+/* Hero */
+.hero{height:100vh;position:relative;overflow:hidden}
+.hero video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.overlay{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.6)}
+.hero-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2}
+.hero-content h1{font-size:56px}
+.hero-content span{color:#38bdf8}
+.hero-content p{margin:20px 0;color:#cbd5f5}
+.btn{padding:12px 25px;border-radius:10px;text-decoration:none;margin:5px;display:inline-block}
+.btn-primary{background:#38bdf8;color:#0f172a}
+.btn-secondary{border:1px solid #38bdf8;color:#38bdf8}
+
+/* About */
+.about{padding:80px 20px;text-align:center;background:#020617}
+.about h2{font-size:32px;margin-bottom:20px}
+.about h3{margin-top:20px;color:#38bdf8}
+.about p{max-width:700px;margin:auto;color:#cbd5f5; line-height:1.7;}
+.about ul{max-width:700px;margin:10px auto;text-align:left;padding-left:20px;color:#cbd5f5;}
+.about li{margin:6px 0;line-height:1.6;}
+
+/* Features */
+.features{display:flex;justify-content:center;gap:30px;padding:80px 20px;flex-wrap:wrap}
+.card{background:#1e293b;padding:30px;border-radius:16px;width:260px;text-align:center;transition:0.3s; cursor:pointer;}
+.card:hover{transform:translateY(-10px) scale(1.05);background:#334155; border: 1px solid #38bdf8;}
+
+/* Teachers */
+.teachers{padding:80px 20px;text-align:center}
+.teacher-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:25px;margin-top:30px}
+.teacher{background:#1e293b;padding:20px;border-radius:16px;transition:0.3s;cursor:pointer}
+.teacher:hover{transform:scale(1.05);background:#334155}
+.teacher img{width:100%;border-radius:12px;margin-bottom:10px}
+
+/* Contact */
+.contact{padding:80px 20px;text-align:center;background:#020617}
+form{max-width:400px;margin:auto;display:flex;flex-direction:column;gap:10px}
+input,textarea, select{padding:12px;border-radius:10px;border:none;background:#1e293b;color:white}
+button{padding:12px;border:none;background:#38bdf8;color:#0f172a;border-radius:10px;font-weight:600; cursor:pointer;}
+
+/* Footer */
+footer{text-align:center;padding:20px;background:#020617;color:#94a3b8}
+
+/* Fade animation */
+.fade{opacity:0;transform:translateY(20px);transition:1s}
+.fade.show{opacity:1;transform:translateY(0)}
+
+/* Modal */
+.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.8); backdrop-filter: blur(5px);}
+.modal-content{background:#1e293b;margin:10% auto;padding:30px;width:90%;max-width:500px;border-radius:12px;text-align:center; position: relative;}
+.modal-content img{width:100%;border-radius:10px;margin-bottom:10px;}
+.close{position: absolute; right: 15px; top: 10px; color:white; font-size:28px; cursor:pointer;}
+
+@media(max-width:768px){
+.nav-links{display:none}
+.hero-content h1{font-size:36px}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="logo">
+<img src="https://www.facebook.com/photo/?fbid=1377926855853944&set=a.1376951435951486">
+<span>АЙРАГ ЕБС</span>
+</div>
+
+<ul class="nav-links">
+<li><a href="#">Нүүр</a></li>
+<li class="dropdown">
+<a href="#features">Хөтөлбөр ▾</a>
+<ul class="dropdown-menu">
+<li><a href="javascript:void(0)" onclick="openInfo('online')">Цахим сургалт</a></li>
+<li><a href="javascript:void(0)" onclick="openInfo('lab')">Лаборатори</a></li>
+<li><a href="javascript:void(0)" onclick="openInfo('success')">Амжилт</a></li>
+</ul>
+</li>
+<li><a href="#teachers">Багш нар</a></li>
+<li><a href="#contact">Холбоо барих</a></li>
+</ul>
+
+<button onclick="openRegModal()" class="btn-cta">Бүртгүүлэх</button>
+</nav>
+
+<section class="hero">
+<video autoplay muted loop>
+<source src="https://www.w3schools.com/howto/rain.mp4">
+</video>
+<div class="overlay"></div>
+
+<div class="hero-content">
+<h1>Ирээдүйг <span>хамтдаа бүтээе</span></h1>
+<p>Орчин үеийн сургалт таныг дараагийн түвшинд хүргэнэ</p>
+<a href="#about" class="btn btn-primary">Танилцуулга</a>
+<a href="#contact" class="btn btn-secondary">Холбогдох</a>
+</div>
+</section>
+
+<section id="about" class="about">
+<h2>Сургуулийн танилцуулга</h2>
+<p>
+Дорноговь аймгийн Айраг суманд байрлах Айраг сумын Ерөнхий боловсролын сургууль нь
+орон нутгийн хүүхэд, залуусыг ерөнхий боловсролоор хангах үндсэн үүрэгтэй
+боловсролын байгууллага юм.
+</p>
+
+<h3>Ерөнхий мэдээлэл</h3>
+<ul>
+<li><b>Байршил:</b> Дорноговь аймаг, Айраг сум, 1-р баг (Нарт)</li>
+<li><b>Чиг үүрэг:</b> Бага, дунд, ахлах боловсрол олгох</li>
+<li><b>Газрын хэмжээ:</b> 22,700 м² орчим</li>
+</ul>
+
+<h3>Удирдлага, бүтэц</h3>
+<ul>
+<li>Захирал – Э.Ариунбаяр</li>
+<li>Сургалтын менежер – Б.Нарангэрэл, Б.Бүжидмаа</li>
+<li>Нийгмийн ажилтан – Ц.Мөнхбаясгалан</li>
+</ul>
+
+<h3>Товч түүх</h3>
+<p>
+Айраг сумын ерөнхий боловсролын сургууль нь 1960–1970-аад оны үед анх байгуулагдсан. 
+Өнөөдөр тус сургууль нь хэдэн зуун сурагч, олон арван багш, ажилтантайгаар үйл ажиллагаа явуулж, 
+Айраг сумын боловсролын салбарын тулгуур байгууллага болон хөгжиж байна.
+</p>
+</section>
+
+<section id="features" class="features">
+<div class="card fade" onclick="openInfo('online')"><h3>Цахим сургалт</h3><p>Дэлгэрэнгүй</p></div>
+<div class="card fade" onclick="openInfo('lab')"><h3>Лаборатори</h3><p>Дэлгэрэнгүй</p></div>
+<div class="card fade" onclick="openInfo('success')"><h3>Амжилт</h3><p>Дэлгэрэнгүй</p></div>
+</section>
+
+<section id="teachers" class="teachers">
+<h2>Манай багш нар</h2>
+<div class="teacher-grid">
+<div class="teacher fade" onclick="showTeacher('Гүррагчаа','Мэдээлэл технологийн багш ','https://via.placeholder.com/200')">
+<img src="https://via.placeholder.com/200">
+<h4>Мэдэлээлэзүйн багш</h4>
+</div>
+<div class="teacher fade" onclick="showTeacher('Багш 2','Англи хэлний багш','https://via.placeholder.com/200')">
+<img src="https://via.placeholder.com/200">
+<h4>Багш 2</h4>
+</div>
+</div>
+</section>
+
+<section id="contact" class="contact">
+<h2>Холбоо барих</h2>
+<form onsubmit="alert('Зурвас илгээгдлээ!'); return false;">
+<input type="text" placeholder="Нэр" required>
+<input type="email" placeholder="Имэйл" required>
+<textarea placeholder="Зурвас" required></textarea>
+<button type="submit">Илгээх</button>
+</form>
+</section>
+
+<footer>
+<p>© 2026 Айраг ЕБС</p>
+</footer>
+
+<div id="generalModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('generalModal')">&times;</span>
+<img id="modalImg" style="display:none;">
+<h3 id="modalTitle" style="color:#38bdf8; margin-bottom:15px;"></h3>
+<div id="modalText" style="text-align:left; color:#cbd5f5; line-height:1.6;"></div>
+</div>
+</div>
+
+<div id="regModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('regModal')">&times;</span>
+<h2 style="color:#38bdf8; margin-bottom:20px;">Сурагчийн бүртгэл</h2>
+<form onsubmit="alert('Бүртгэл амжилттай илгээгдлээ!'); closeModal('regModal'); return false;">
+<input type="text" placeholder="Овог нэр" required style="width:100%; margin-bottom:10px;">
+<input type="tel" placeholder="Утасны дугаар" required style="width:100%; margin-bottom:10px;">
+<select style="width:100%; margin-bottom:10px;">
+    <option>Бага анги</option>
+    <option>Дунд анги</option>
+    <option>Ахлах анги</option>
+</select>
+<button type="submit" style="width:100%;">Илгээх</button>
+</form>
+</div>
+</div>
+
+<script>
+// Fade animation
+const faders = document.querySelectorAll('.fade');
+window.addEventListener('scroll', () => {
+faders.forEach(el => {
+const top = el.getBoundingClientRect().top;
+if(top < window.innerHeight - 50){
+el.classList.add('show');
+}
+});
+});
+
+// Мэдээллийн сан
+const infoData = {
+    online: {
+        title: "Цахим сургалт",
+        text: "Манай сургууль Google Classroom болон цахим платформуудыг ашиглан сурагчдад хаанаас ч суралцах боломжийг олгодог. Цахим хичээлийн сан, интерактив даалгавруудтай."
+    },
+    lab: {
+        title: "Лаборатори",
+        text: "Орчин үеийн компьютер болон байгалийн ухааны лабораториудтай. Сурагчид онолын мэдлэгийг практик туршилтаар бататгах бүрэн боломжтой."
+    },
+    success: {
+        title: "Сургуулийн амжилт",
+        text: "Айраг сумын ЕБС-ийн сурагчид аймаг, улсын олимпиадуудад жил бүр тогтмол амжилт гаргаж, спортын наадмуудад тэргүүлдэг."
+    }
+};
+
+// Functions
+function openInfo(type) {
+    const modal = document.getElementById('generalModal');
+    document.getElementById('modalImg').style.display = 'none';
+    document.getElementById('modalTitle').innerText = infoData[type].title;
+    document.getElementById('modalText').innerHTML = infoData[type].text;
+    modal.style.display = 'block';
+}
+
+function showTeacher(name, info, img){
+    const modal = document.getElementById('generalModal');
+    const mImg = document.getElementById('modalImg');
+    mImg.src = img;
+    mImg.style.display = 'block';
+    document.getElementById('modalTitle').innerText = name;
+    document.getElementById('modalText').innerText = info;
+    modal.style.display = 'block';
+}
+
+function openRegModal() {
+    document.getElementById('regModal').style.display = 'block';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+window.onclick = function(e) {
+    if (e.target.className === 'modal') {
+        e.target.style.display = 'none';
+    }
+}
+</script>
+
+</body>
+</html>
